@@ -1,0 +1,1483 @@
+<!DOCTYPE html-REPLACED>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Black Spectacular: Time Travel & the Oppositional Gaze</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Syne:wght@400;600;700;800&display=swap');
+
+  :root {
+    --black: #0a0a0a;
+    --near-black: #111111;
+    --deep: #151515;
+    --mid: #1e1e1e;
+    --surface: #242424;
+    --surface-2: #2e2e2e;
+    --border: rgba(255,255,255,0.07);
+    --border-active: rgba(255,255,255,0.18);
+    --text: #e8e3dc;
+    --text-dim: #998f82;
+    --text-dimmer: #5a534a;
+    --amber: #c8a96e;
+    --amber-dim: rgba(200, 169, 110, 0.15);
+    --amber-glow: rgba(200, 169, 110, 0.06);
+    --rust: #b5502a;
+    --cream: #f0e8d8;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; font-size: 16px; }
+
+  body {
+    background: var(--black);
+    color: var(--text);
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.1rem;
+    line-height: 1.75;
+    overflow-x: hidden;
+    cursor: default;
+  }
+
+  /* Grain overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.35;
+  }
+
+  /* === INTRO MODAL === */
+  #intro-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.92);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    backdrop-filter: blur(12px);
+    animation: fadeIn 0.6s ease;
+  }
+
+  #intro-overlay.hidden {
+    animation: fadeOut 0.5s ease forwards;
+    pointer-events: none;
+  }
+
+  .intro-card {
+    max-width: 640px;
+    width: 100%;
+    background: var(--deep);
+    border: 1px solid var(--border-active);
+    border-radius: 4px;
+    padding: 3.5rem;
+    position: relative;
+    box-shadow: 0 0 80px rgba(200, 169, 110, 0.08), 0 40px 80px rgba(0,0,0,0.7);
+    animation: riseUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .intro-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--amber), transparent);
+  }
+
+  .intro-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 1.8rem;
+  }
+
+  .intro-card h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.1rem;
+    font-weight: 300;
+    line-height: 1.2;
+    color: var(--cream);
+    margin-bottom: 1.4rem;
+    letter-spacing: -0.01em;
+  }
+
+  .intro-card h2 em {
+    font-style: italic;
+    color: var(--amber);
+  }
+
+  .intro-card p {
+    color: var(--text-dim);
+    font-size: 1rem;
+    line-height: 1.7;
+    margin-bottom: 1rem;
+  }
+
+  .intro-card p:last-of-type {
+    margin-bottom: 2rem;
+  }
+
+  .intro-enter-btn {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    background: none;
+    border: 1px solid var(--amber);
+    color: var(--amber);
+    padding: 0.85rem 2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 2px;
+  }
+
+  .intro-enter-btn:hover {
+    background: var(--amber);
+    color: var(--black);
+  }
+
+  /* === HEADER === */
+  header {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 4rem;
+    overflow: hidden;
+  }
+
+  .header-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 75% 40%, rgba(181, 80, 42, 0.09) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 20% 70%, rgba(200, 169, 110, 0.06) 0%, transparent 60%),
+      linear-gradient(180deg, var(--black) 0%, #0d0c0b 100%);
+  }
+
+  .header-glyph {
+    position: absolute;
+    top: 12%;
+    right: 8%;
+    width: 340px;
+    height: 340px;
+    opacity: 0.12;
+  }
+
+  .header-eyebrow {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 2rem;
+    position: relative;
+    z-index: 1;
+    opacity: 0;
+    animation: slideUp 1s 0.3s ease forwards;
+  }
+
+  header h1 {
+    position: relative;
+    z-index: 1;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(2.8rem, 6vw, 5.5rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--cream);
+    max-width: 800px;
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: slideUp 1s 0.5s ease forwards;
+  }
+
+  header h1 span {
+    display: block;
+    color: var(--amber);
+    font-style: italic;
+  }
+
+  .header-sub {
+    position: relative;
+    z-index: 1;
+    max-width: 520px;
+    font-size: 1rem;
+    color: var(--text-dim);
+    line-height: 1.6;
+    opacity: 0;
+    animation: slideUp 1s 0.7s ease forwards;
+    margin-bottom: 3rem;
+  }
+
+  .scroll-indicator {
+    position: relative;
+    z-index: 1;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--text-dimmer);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    opacity: 0;
+    animation: slideUp 1s 0.9s ease forwards;
+  }
+
+  .scroll-line {
+    width: 48px;
+    height: 1px;
+    background: var(--text-dimmer);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .scroll-line::after {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: var(--amber);
+    animation: scanLine 2s 1.5s ease-in-out infinite;
+  }
+
+  /* === NAV === */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10,10,10,0.9);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 1.1rem 4rem;
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+  }
+
+  .nav-brand {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-right: auto;
+  }
+
+  nav a {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-dimmer);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  nav a:hover { color: var(--text); }
+
+  /* === SECTIONS === */
+  section {
+    padding: 7rem 4rem;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .section-label::before {
+    content: '';
+    display: inline-block;
+    width: 24px;
+    height: 1px;
+    background: var(--amber);
+  }
+
+  .section-rule {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 0 4rem;
+  }
+
+  /* === RED STRING LAYOUT === */
+  .thread-layout {
+    display: grid;
+    gap: 0;
+    position: relative;
+  }
+
+  .thread-spine {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: linear-gradient(180deg, transparent, var(--amber) 10%, var(--amber) 90%, transparent);
+    opacity: 0.25;
+    transform: translateX(-50%);
+  }
+
+  .thread-node {
+    display: grid;
+    grid-template-columns: 1fr 80px 1fr;
+    align-items: start;
+    gap: 0;
+    padding: 3.5rem 0;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .thread-node.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .thread-node:nth-child(even) .node-content {
+    grid-column: 3;
+    grid-row: 1;
+  }
+
+  .thread-node:nth-child(even) .node-void {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .node-content {
+    padding: 0 3rem;
+  }
+
+  .node-connector {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    padding-top: 0.5rem;
+  }
+
+  .node-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--amber);
+    border: 2px solid var(--amber);
+    box-shadow: 0 0 20px rgba(200, 169, 110, 0.4);
+    flex-shrink: 0;
+  }
+
+  .node-void { /* empty side */ }
+
+  .node-number {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    color: var(--text-dimmer);
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .node-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.75rem;
+    font-weight: 300;
+    color: var(--cream);
+    line-height: 1.2;
+    margin-bottom: 1.2rem;
+    letter-spacing: -0.01em;
+  }
+
+  .node-title em { color: var(--amber); font-style: italic; }
+
+  .node-body {
+    font-size: 1rem;
+    color: var(--text-dim);
+    line-height: 1.75;
+  }
+
+  .node-body p { margin-bottom: 0.9rem; }
+
+  .node-pull {
+    margin: 1.2rem 0;
+    padding: 1rem 1.5rem;
+    border-left: 2px solid var(--amber);
+    font-style: italic;
+    color: var(--amber);
+    font-size: 1.05rem;
+    line-height: 1.5;
+    background: var(--amber-glow);
+    border-radius: 0 2px 2px 0;
+  }
+
+  /* === CARD SWIPE === */
+  .cards-section {
+    padding: 7rem 4rem;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .cards-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+  }
+
+  .cards-header h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.4rem;
+    font-weight: 300;
+    color: var(--cream);
+    line-height: 1.1;
+    max-width: 500px;
+  }
+
+  .cards-header h2 em { color: var(--amber); font-style: italic; }
+
+  .card-controls {
+    display: flex;
+    gap: 0.75rem;
+  }
+
+  .card-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid var(--border-active);
+    background: none;
+    color: var(--text);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    font-size: 1rem;
+  }
+
+  .card-btn:hover {
+    background: var(--amber);
+    border-color: var(--amber);
+    color: var(--black);
+  }
+
+  .card-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+
+  .card-btn:disabled:hover {
+    background: none;
+    border-color: var(--border-active);
+    color: var(--text);
+  }
+
+  .cards-track-outer {
+    overflow: hidden;
+    position: relative;
+  }
+
+  .cards-track {
+    display: flex;
+    gap: 1.5rem;
+    transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+
+  .concept-card {
+    flex: 0 0 380px;
+    background: var(--deep);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 2.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .concept-card:hover {
+    border-color: var(--border-active);
+    box-shadow: 0 8px 40px rgba(0,0,0,0.4);
+  }
+
+  .concept-card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--amber), transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .concept-card:hover::after { opacity: 1; }
+
+  .card-tag {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-dimmer);
+    margin-bottom: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .card-tag-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--amber);
+  }
+
+  .concept-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: var(--cream);
+    line-height: 1.2;
+    margin-bottom: 1.2rem;
+  }
+
+  .concept-card p {
+    font-size: 0.96rem;
+    color: var(--text-dim);
+    line-height: 1.7;
+    margin-bottom: 0.8rem;
+  }
+
+  .card-source {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.58rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-dimmer);
+    margin-top: 1.5rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid var(--border);
+  }
+
+  /* === PROCESS NOTES === */
+  .process-section {
+    padding: 7rem 4rem;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .process-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    margin-top: 3.5rem;
+    align-items: start;
+  }
+
+  .process-text h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem;
+    font-weight: 300;
+    color: var(--cream);
+    line-height: 1.15;
+    margin-bottom: 2rem;
+  }
+
+  .process-notes {
+    list-style: none;
+    counter-reset: notes;
+  }
+
+  .process-notes li {
+    counter-increment: notes;
+    position: relative;
+    padding: 1.8rem 0 1.8rem 4rem;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.96rem;
+    color: var(--text-dim);
+    line-height: 1.65;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: all 0.5s ease;
+  }
+
+  .process-notes li.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .process-notes li::before {
+    content: counter(notes, decimal-leading-zero);
+    position: absolute;
+    left: 0;
+    top: 1.8rem;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    color: var(--amber);
+  }
+
+  .process-notes li strong {
+    display: block;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text);
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+  }
+
+  .process-visual {
+    position: sticky;
+    top: 6rem;
+  }
+
+  .process-quote {
+    padding: 3rem;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: var(--deep);
+    position: relative;
+  }
+
+  .process-quote::before {
+    content: '"';
+    position: absolute;
+    top: -0.5rem;
+    left: 2rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 6rem;
+    color: var(--amber);
+    opacity: 0.3;
+    line-height: 1;
+  }
+
+  .process-quote blockquote {
+    font-size: 1.2rem;
+    font-style: italic;
+    color: var(--text);
+    line-height: 1.6;
+    margin-bottom: 1.2rem;
+    padding-top: 1.5rem;
+  }
+
+  .process-quote cite {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.62rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-dimmer);
+    font-style: normal;
+  }
+
+  /* === BIBLIOGRAPHY === */
+  .bib-section {
+    padding: 7rem 4rem;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .bib-header {
+    margin-bottom: 3.5rem;
+  }
+
+  .bib-header h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 300;
+    color: var(--cream);
+    margin-bottom: 0.8rem;
+  }
+
+  .bib-header p {
+    font-size: 0.9rem;
+    color: var(--text-dimmer);
+  }
+
+  .bib-list {
+    list-style: none;
+    display: grid;
+    gap: 0;
+  }
+
+  .bib-item {
+    padding: 1.6rem 0;
+    border-bottom: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: 2rem 1fr;
+    gap: 1.5rem;
+    align-items: start;
+    transition: background 0.2s ease;
+  }
+
+  .bib-item:hover {
+    background: var(--amber-glow);
+  }
+
+  .bib-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    color: var(--text-dimmer);
+    padding-top: 0.25rem;
+  }
+
+  .bib-entry {
+    font-size: 0.95rem;
+    color: var(--text-dim);
+    line-height: 1.65;
+  }
+
+  .bib-entry em {
+    color: var(--text);
+    font-style: italic;
+  }
+
+  /* === FOOTER === */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 3rem 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-dimmer);
+  }
+
+  /* === ANIMATIONS === */
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+  }
+
+  @keyframes riseUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes scanLine {
+    0% { left: -100%; }
+    100% { left: 100%; }
+  }
+
+  @keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 0.12; }
+    50% { opacity: 0.2; }
+  }
+
+  .header-glyph {
+    animation: rotate 80s linear infinite, pulse 6s ease-in-out infinite;
+  }
+
+  /* === RESPONSIVE === */
+  @media (max-width: 900px) {
+    header, section, .cards-section, .process-section, .bib-section { padding: 5rem 2rem; }
+    nav { padding: 1rem 2rem; gap: 1.5rem; }
+    footer { padding: 2rem; flex-direction: column; gap: 1rem; text-align: center; }
+    .thread-spine { display: none; }
+    .thread-node { grid-template-columns: 1fr; }
+    .thread-node .node-connector { display: none; }
+    .thread-node:nth-child(even) .node-content,
+    .thread-node:nth-child(even) .node-void { grid-column: 1; }
+    .thread-node:nth-child(even) .node-void { display: none; }
+    .process-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .process-visual { position: relative; top: auto; }
+    .concept-card { flex: 0 0 300px; }
+    .cards-header { flex-direction: column; align-items: flex-start; }
+    .section-rule { margin: 0 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- INTRO MODAL -->
+<div id="intro-overlay">
+  <div class="intro-card">
+    <div class="intro-label">An Introduction</div>
+    <h2>What Does It Mean to <em>Travel Through Time</em> While Black?</h2>
+    <p>
+      This project sits at the intersection of two arguments. Stuart Hall tracks
+      the mechanisms that fix Black bodies inside a "racialized regime of
+      representation" across centuries. bell hooks asks what it means to look back
+      at that machinery, deliberately, with what she calls the oppositional gaze.
+    </p>
+    <p>
+      The Black spectacular as a site of shapeshifting: to be seen, refused, re-seen,
+      re-refused, and then to build something else entirely from that refusal.
+      Hooks traces this through cinema. Hall traces it through representation's deep
+      history. Together, they map the archive these projects inherit and the cracks
+      running through it.
+    </p>
+    <p>
+      Scroll through to read the red string connecting these texts, the key concepts
+      from each, and process notes for the work.
+    </p>
+    <button class="intro-enter-btn" onclick="closeIntro()">Enter the project</button>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="header-bg"></div>
+  <svg class="header-glyph" viewBox="0 0 340 340" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="170" cy="170" r="140" stroke="#c8a96e" stroke-width="0.5"/>
+    <circle cx="170" cy="170" r="100" stroke="#c8a96e" stroke-width="0.5"/>
+    <circle cx="170" cy="170" r="60" stroke="#c8a96e" stroke-width="0.5"/>
+    <line x1="30" y1="170" x2="310" y2="170" stroke="#c8a96e" stroke-width="0.5"/>
+    <line x1="170" y1="30" x2="170" y2="310" stroke="#c8a96e" stroke-width="0.5"/>
+    <line x1="71" y1="71" x2="269" y2="269" stroke="#c8a96e" stroke-width="0.5"/>
+    <line x1="269" y1="71" x2="71" y2="269" stroke="#c8a96e" stroke-width="0.5"/>
+    <polygon points="170,50 200,130 290,130 220,180 248,260 170,210 92,260 120,180 50,130 140,130" stroke="#c8a96e" stroke-width="0.5" fill="none"/>
+  </svg>
+
+  <div class="header-eyebrow">Black Performance Studies</div>
+  <h1>The Black Spectacular<span>Time Travel & the Oppositional Gaze</span></h1>
+  <p class="header-sub">
+    A study of how the spectacle of the Other has been constructed, fixed,
+    and contested across history, and what it means to look back.
+  </p>
+  <div class="scroll-indicator">
+    <div class="scroll-line"></div>
+    Scroll to explore
+  </div>
+</header>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">The Black Spectacular</div>
+  <a href="#red-string">The Thread</a>
+  <a href="#concepts">Concepts</a>
+  <a href="#process">Process</a>
+  <a href="#works-cited">Bibliography</a>
+</nav>
+
+<!-- RED STRING SECTION -->
+<section id="red-string">
+  <div class="section-label">The Red String</div>
+  <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 2.4rem; font-weight: 300; color: var(--cream); line-height: 1.1; max-width: 600px; margin-bottom: 1rem;">
+    One continuous thread running through both texts
+  </h2>
+  <p style="color: var(--text-dim); font-size: 1rem; max-width: 540px; margin-bottom: 5rem; line-height: 1.7;">
+    Hall and hooks are asking the same question from opposite ends of the same rope:
+    what happens to the gaze when the gazed-upon decides to stare back?
+  </p>
+
+  <div class="thread-layout">
+    <div class="thread-spine"></div>
+
+    <div class="thread-node" id="node-1">
+      <div class="node-content">
+        <div class="node-number"><span>01</span></div>
+        <div class="node-title">The Body as <em>Text</em></div>
+        <div class="node-body">
+          <p>
+            Hall identifies the racialized body as the primary surface onto which Western culture
+            writes its anxieties. Through the history of slavery, colonial anthropology, and mass
+            media, the Black body was made to function as "incontrovertible evidence" of natural
+            difference. Difference that required no argument because it was visible. You could see it.
+          </p>
+          <div class="node-pull">
+            "The body itself and its differences were visible for all to see, and thus provided
+            the incontrovertible evidence for a naturalization of racial difference."
+          </div>
+          <p>
+            This is the machinery that hooks's spectators are navigating when they walk into a theater.
+            The body as text, already written before the film even begins. The screen becomes a second
+            skin, and what is projected onto it confirms what was already decided elsewhere.
+          </p>
+        </div>
+      </div>
+      <div class="node-connector">
+        <div class="node-dot"></div>
+      </div>
+      <div class="node-void"></div>
+    </div>
+
+    <div class="thread-node" id="node-2">
+      <div class="node-void"></div>
+      <div class="node-connector">
+        <div class="node-dot"></div>
+      </div>
+      <div class="node-content">
+        <div class="node-number"><span>02</span></div>
+        <div class="node-title">Fixing Meaning, <em>Resisting Closure</em></div>
+        <div class="node-body">
+          <p>
+            Hall's argument about stereotyping is fundamentally temporal. The stereotype wants to
+            arrest time, to declare that certain characteristics are fixed "forever in Nature."
+            Naturalization is, as Hall frames it, a strategy against history itself, since if
+            difference is natural it becomes immovable, beyond revision.
+          </p>
+          <p>
+            hooks captures the subjective experience of this freezing. Black women spectators
+            who went to Hollywood films encountered a cinema that had pre-decided their meaning.
+            Their response was not passive. Many cultivated an oppositional gaze: a way of looking
+            that refused the terms the film was offering.
+          </p>
+          <div class="node-pull">
+            "We see our history as counter-memory, using it as a way to know
+            the present and invent the future."
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="thread-node" id="node-3">
+      <div class="node-content">
+        <div class="node-number"><span>03</span></div>
+        <div class="node-title">The Spectacle and Its <em>Double</em></div>
+        <div class="node-body">
+          <p>
+            Both texts circle around a structural ambivalence at the heart of racial representation.
+            Hall's analysis of the Ben Johnson photograph makes this vivid: the same image can
+            signify triumph and disgrace simultaneously. Black subjects are "required to be both
+            things at the same time." Hero and villain. Noble and savage. Infantile and hypersexual.
+          </p>
+          <p>
+            This double-bind is exactly what the oppositional gaze exposes. hooks's Black female
+            spectators developed a critical distance from the screen precisely because identification
+            was not available to them on the film's own terms. Being denied entry into the apparatus
+            produced an alternative vantage point, a place from which to read the image against itself.
+          </p>
+          <div class="node-pull">
+            "Black and white audiences were reading the same thing differently all along."
+          </div>
+        </div>
+      </div>
+      <div class="node-connector">
+        <div class="node-dot"></div>
+      </div>
+      <div class="node-void"></div>
+    </div>
+
+    <div class="thread-node" id="node-4">
+      <div class="node-void"></div>
+      <div class="node-connector">
+        <div class="node-dot"></div>
+      </div>
+      <div class="node-content">
+        <div class="node-number"><span>04</span></div>
+        <div class="node-title">Shapeshifting as <em>Counter-Strategy</em></div>
+        <div class="node-body">
+          <p>
+            The end of Hall's chapter examines what he calls "trans-coding": taking existing
+            meanings and re-appropriating them for different ends. This is representational
+            shapeshifting. It accepts that you cannot simply step outside the regime of
+            representation, but it refuses to stay still inside it either.
+          </p>
+          <p>
+            hooks arrives at the same site through a different door. Filmmakers like Julie Dash
+            and Zeinabu Davis don't oppose the dominant cinema by simply reversing it. They shift
+            the apparatus itself: who holds the camera, what body is at the center of the frame,
+            whose gaze organizes the narrative. That is time travel in the Black spectacular sense.
+            Going back into the image-making machinery and rewiring it.
+          </p>
+          <div class="node-pull">
+            "As critical spectators, black women participate in a broad range of looking
+            relations, contest, resist, revision, interrogate, and invent on multiple levels."
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="thread-node" id="node-5">
+      <div class="node-content">
+        <div class="node-number"><span>05</span></div>
+        <div class="node-title">The <em>Spectacular</em> as Persistence</div>
+        <div class="node-body">
+          <p>
+            What connects Hall's historical archive to hooks's cinematic present is persistence.
+            Hall documents how the representational figures forged in the era of slavery, the
+            Tom, the Mammy, the Buck, the tragic mulatto, passed into American cinema almost
+            intact. The genre changed. The essential grammar did not.
+          </p>
+          <p>
+            hooks saw this firsthand. The Black women spectators she interviewed were uniformly
+            aware of cinematic racism. They expected nothing different. That expectation is itself
+            a kind of temporal knowledge, a consciousness carried forward from before their own
+            lifetimes, transmitted through culture. The spectacular operates across time. So does
+            the opposition to it.
+          </p>
+          <div class="node-pull">
+            "Looking and looking back, black women involve ourselves in a process whereby
+            we see our history as counter-memory."
+          </div>
+        </div>
+      </div>
+      <div class="node-connector">
+        <div class="node-dot"></div>
+      </div>
+      <div class="node-void"></div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="section-rule">
+
+<!-- CONCEPT CARDS -->
+<div class="cards-section" id="concepts">
+  <div class="cards-header">
+    <div>
+      <div class="section-label">Key Concepts</div>
+      <h2>The terms that do the <em>real work</em></h2>
+    </div>
+    <div class="card-controls">
+      <button class="card-btn" id="prev-btn" disabled onclick="scrollCards(-1)">&#8592;</button>
+      <button class="card-btn" id="next-btn" onclick="scrollCards(1)">&#8594;</button>
+    </div>
+  </div>
+
+  <div class="cards-track-outer">
+    <div class="cards-track" id="cards-track">
+
+      <div class="concept-card">
+        <div class="card-tag"><div class="card-tag-dot"></div>bell hooks</div>
+        <h3>The Oppositional Gaze</h3>
+        <p>
+          The gaze has always been political. Enslaved people were punished for looking at white
+          people directly. The prohibition itself created a counter-desire, an "overwhelming longing
+          to look" that hooks calls rebellious.
+        </p>
+        <p>
+          The oppositional gaze emerges from this history. It is a mode of looking that does not
+          accept the terms of the image it encounters. Awareness. Refusal. Critical interrogation.
+          All happening simultaneously while watching a film.
+        </p>
+        <div class="card-source">hooks, "The Oppositional Gaze," 1992</div>
+      </div>
+
+      <div class="concept-card">
+        <div class="card-tag"><div class="card-tag-dot"></div>Stuart Hall</div>
+        <h3>Regime of Representation</h3>
+        <p>
+          A regime of representation is the whole system of imagery through which a culture
+          signals "difference" at a given historical moment. Hall traces this across centuries,
+          from soap advertisements to Olympic photographs to Hollywood.
+        </p>
+        <p>
+          The regime is persistent but not fixed. Its stereotypes shift in surface appearance while
+          maintaining their deep grammar. Race, gender, and sexuality cross each other inside it
+          in ways that multiply and reinforce the marking of difference.
+        </p>
+        <div class="card-source">Hall, "The Spectacle of the Other," 1997</div>
+      </div>
+
+      <div class="concept-card">
+        <div class="card-tag"><div class="card-tag-dot"></div>Stuart Hall</div>
+        <h3>Stereotyping as Splitting</h3>
+        <p>
+          Hall, drawing on Sander Gilman's psychoanalytic framework, argues that stereotyping
+          always involves splitting the world into "good" and "bad" objects. The stereotype
+          projects anxiety onto the Other, keeping the self clean.
+        </p>
+        <p>
+          This means stereotypes are structurally binary: the same Black subject can embody both
+          the infantile and the hypersexual, the noble and the savage. The double-bind is
+          built into the form, not a failure of individual prejudice.
+        </p>
+        <div class="card-source">Hall, "The Spectacle of the Other," 1997</div>
+      </div>
+
+      <div class="concept-card">
+        <div class="card-tag"><div class="card-tag-dot"></div>bell hooks</div>
+        <h3>Cinematic Gaslighting</h3>
+        <p>
+          hooks uses this term for the experience of Black women who loved Hollywood cinema.
+          To fully enjoy the pleasure of the film, they had to "close down critique" and forget
+          racism. The film asked them to participate in their own negation.
+        </p>
+        <p>
+          Toni Morrison's Miss Pauline Breedlove is hooks's example: a woman who finds happiness
+          at the movies only by imagining herself as the white woman on screen. "But it made
+          coming home hard."
+        </p>
+        <div class="card-source">hooks, "The Oppositional Gaze," 1992</div>
+      </div>
+
+      <div class="concept-card">
+        <div class="card-tag"><div class="card-tag-dot"></div>Stuart Hall</div>
+        <h3>Fetishism and Disavowal</h3>
+        <p>
+          In Hall's reading of Saartjie Baartman's public display in 19th century Europe,
+          fetishism operates as a "having-it-both-ways": the observers can look obsessively
+          while disavowing the sexual nature of their gaze by calling it science.
+        </p>
+        <p>
+          This is how forbidden desire finds representation. The fetish object substitutes for
+          what cannot be directly shown. The alibi, Hall notes, is always power/knowledge,
+          ethnology, objectivity, the pursuit of Truth.
+        </p>
+        <div class="card-source">Hall, "The Spectacle of the Other," 1997</div>
+      </div>
+
+      <div class="concept-card">
+        <div class="card-tag"><div class="card-tag-dot"></div>bell hooks</div>
+        <h3>Counter-Memory</h3>
+        <p>
+          hooks ends "The Oppositional Gaze" by connecting the look to history. Black women
+          spectators who develop a critical gaze use it to see their own past as counter-memory:
+          a way of knowing the present through what dominant narratives have suppressed.
+        </p>
+        <p>
+          This is where time travel enters the frame. Counter-memory refuses linear time.
+          It assembles a different archive from the same materials, which is what the Black
+          spectacular activates again and again.
+        </p>
+        <div class="card-source">hooks, "The Oppositional Gaze," 1992</div>
+      </div>
+
+      <div class="concept-card">
+        <div class="card-tag"><div class="card-tag-dot"></div>Stuart Hall</div>
+        <h3>Trans-Coding</h3>
+        <p>
+          Hall's term for taking an existing meaning and re-appropriating it for new ends.
+          "Black is Beautiful" is the clearest example: it takes the very characteristic that
+          had been coded as deficiency and re-inflects it as a source of value.
+        </p>
+        <p>
+          Trans-coding can never produce a final victory because meaning can never be permanently
+          fixed. But the instability of meaning is also what makes intervention possible in the
+          first place. The regime can be entered from within.
+        </p>
+        <div class="card-source">Hall, "The Spectacle of the Other," 1997</div>
+      </div>
+
+      <div class="concept-card">
+        <div class="card-tag"><div class="card-tag-dot"></div>Stuart Hall + bell hooks</div>
+        <h3>Commodity Racism</h3>
+        <p>
+          Hall, via Anne McClintock, tracks how Victorian advertising transformed the imperial
+          encounter into domestic imagery. Soap. Biscuits. Tea. The colonial world enters the
+          home as spectacle, cleaning the consumer's conscience alongside the laundry.
+        </p>
+        <p>
+          This is an early version of what hooks documents in cinema: the use of Black bodies to
+          organize white fantasy, to produce white meaning, to maintain white comfort. Different
+          medium, same architecture.
+        </p>
+        <div class="card-source">Hall, 1997 / McClintock, 1995</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<hr class="section-rule">
+
+<!-- PROCESS NOTES -->
+<div class="process-section" id="process">
+  <div class="section-label">Process Notes</div>
+  <div class="process-grid">
+    <div class="process-text">
+      <h2>How this project came together</h2>
+      <ul class="process-notes" id="process-list">
+        <li>
+          <strong>Starting point</strong>
+          The project began with a question about time travel as a structural practice,
+          not a metaphor for nostalgia. The Black spectacular as a site where past representations
+          are not just remembered but activated, replayed, contested.
+        </li>
+        <li>
+          <strong>Source selection</strong>
+          hooks and Hall were selected because they work the same terrain from opposite directions.
+          hooks is phenomenological, working from lived experience outward. Hall is structural,
+          working from systems of meaning inward. The friction between them produces the analysis.
+        </li>
+        <li>
+          <strong>The red string</strong>
+          The organizing logic of the site came from a shared preoccupation across both texts:
+          the problem of fixing and unfixing meaning. Both are fundamentally about what it
+          takes to make meaning slide.
+        </li>
+        <li>
+          <strong>On the writing</strong>
+          The goal was to be academically grounded without treating the sources as monuments.
+          These texts are working arguments, not scripture. Engagement means pushing on them,
+          not just summarizing.
+        </li>
+        <li>
+          <strong>What this leaves open</strong>
+          The connection to contemporary Black performance, to the spectacular as it operates
+          now in social media and streaming, is deliberately left as the next layer. This site
+          maps the archive. The project work builds from here.
+        </li>
+      </ul>
+    </div>
+
+    <div class="process-visual">
+      <div class="process-quote">
+        <blockquote>
+          "Even in the worst circumstances of domination, the ability to manipulate one's
+          gaze in the face of structures of domination that would contain it, opens up the
+          possibility of agency."
+        </blockquote>
+        <cite>bell hooks, Black Looks, 1992</cite>
+      </div>
+
+      <div style="margin-top: 1.5rem; padding: 2rem; border: 1px solid var(--border); border-radius: 4px; background: var(--deep);">
+        <div class="section-label" style="margin-bottom: 1rem;">Two Sources</div>
+        <div style="display: grid; gap: 1rem;">
+          <div style="padding: 1.2rem; background: var(--surface); border-radius: 3px;">
+            <div style="font-family: 'Syne', sans-serif; font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--amber); margin-bottom: 0.4rem;">bell hooks</div>
+            <div style="font-size: 0.92rem; color: var(--text); font-style: italic;">"The Oppositional Gaze"</div>
+            <div style="font-size: 0.82rem; color: var(--text-dimmer); margin-top: 0.3rem;">Black Looks, 1992</div>
+          </div>
+          <div style="padding: 1.2rem; background: var(--surface); border-radius: 3px;">
+            <div style="font-family: 'Syne', sans-serif; font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--amber); margin-bottom: 0.4rem;">Stuart Hall</div>
+            <div style="font-size: 0.92rem; color: var(--text); font-style: italic;">"The Spectacle of the Other"</div>
+            <div style="font-size: 0.82rem; color: var(--text-dimmer); margin-top: 0.3rem;">Representation, 1997</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="section-rule">
+
+<!-- BIBLIOGRAPHY -->
+<div class="bib-section" id="works-cited">
+  <div class="bib-header">
+    <div class="section-label">Bibliography</div>
+    <h2>Works Cited</h2>
+    <p>MLA format. Sources appearing in this project.</p>
+  </div>
+
+  <ul class="bib-list">
+    <li class="bib-item">
+      <span class="bib-num">01</span>
+      <span class="bib-entry">
+        Bakhtin, Mikhail. <em>The Dialogic Imagination.</em> University of Texas Press, 1981. First published 1935.
+      </span>
+    </li>
+    <li class="bib-item">
+      <span class="bib-num">02</span>
+      <span class="bib-entry">
+        Bhabha, Homi. "The Other Question." <em>Literature, Politics and Theory.</em> Methuen, 1986.
+      </span>
+    </li>
+    <li class="bib-item">
+      <span class="bib-num">03</span>
+      <span class="bib-entry">
+        Bogle, Donald. <em>Toms, Coons, Mulattoes, Mammies and Bucks: An Interpretative History of Blacks in American Films.</em> Viking Press, 1973.
+      </span>
+    </li>
+    <li class="bib-item">
+      <span class="bib-num">04</span>
+      <span class="bib-entry">
+        Derrida, Jacques. <em>Positions.</em> University of Chicago Press, 1972.
+      </span>
+    </li>
+    <li class="bib-item">
+      <span class="bib-num">05</span>
+      <span class="bib-entry">
+        Diawara, Manthia. "Black British Cinema: Spectatorship and Identity Formation in Territories." <em>Black American Cinema.</em> Ed. Manthia Diawara. Routledge, 1993.
+      </span>
+    </li>
+    <li class="bib-item">
+      <span class="bib-num">06</span>
+      <span class="bib-entry">
+        Doane, Mary Ann. "Remembering Women: Psychical and Historical Construction in Film Theory." <em>Psychoanalysis and Cinema.</em> Ed. E. Ann Kaplan. Routledge, 1990.
+      </span>
+    </li>
+    <li class="bib-item">
+      <span class="bib-num">07</span>
+      <span class="bib-entry">
+        Douglas, Mary. <em>Purity and Danger.</em> Routledge and Kegan Paul, 1966.
+      </span>
+    </li>
+    <li class="bib-item">
+      <span class="bib-num">08</span>
+      <span class="bib-entry">
+        Dyer, Richard. <em>Heavenly Bodies.</em> Macmillan/BFI, 1986.
+      </span>
+    </li>
+    <li class="bib-item">
+      <span class="bib-num">09</span>
+      <span class="bib-entry">
+        Fanon, Frantz. <em>Black Skin, White Masks.</em> Pluto Press, 1986. First published 1952.
+      </span>
+    </li>
+    <li class="bib-item">
+      <span class="bib-num">10</span>
+      <span class="bib-entry">
+        Frederickson, George. <em>The Black Image in the White Mind.</em> Wesleyan University Press, 1987.
+      </span>
+    </li>
+    <li class="bib-item">
+      <span class="bib-num">11</span>
+      <span class="bib-entry">
+        Freud, Sigmund. "Fetishism." <em>On Sexualities.</em> Pelican Freud Library, vol. 7. Penguin, 1977. First published 1927.
+      </span>
+    </li>
+    <li class="bib-item">
+      <span class="bib-num">12</span>
+      <span class="bib-entry">
+        Gilman, Sander. <em>Difference and Pathology.</em> Cornell University Press, 1985.
+      </span>
+    </li>
+    <li class="bib-item">
+      <span class="bib-num">13</span>
+      <span class="bib-entry">
+        Hall, Stuart. "The Spectacle of the Other." <em>Representation: Cultural Representations and Signifying Practices.</em> Ed. Stuart Hall. Sage/The Open University, 1997, pp. 223-290.
+      </span>
+    </li>
+    <li class="bib-item">
+      <span class="bib-num">14</span>
+      <span class="bib-entry">
+        hooks, bell. "The Oppositional Gaze: Black Female Spectators." <em>Black Looks: Race and Representation.</em> South End Press, 1992, pp. 115-131.
+      </span>
+    </li>
+    <li class="bib-item">
+      <span class="bib-num">15</span>
+      <span class="bib-entry">
+        Kristeva, Julia. <em>Powers of Horror.</em> Columbia University Press, 1982.
+      </span>
+    </li>
+    <li class="bib-item">
+      <span class="bib-num">16</span>
+      <span class="bib-entry">
+        Mercer, Kobena. "Reading Racial Fetishism." <em>Welcome to the Jungle.</em> Routledge, 1994.
+      </span>
+    </li>
+    <li class="bib-item">
+      <span class="bib-num">17</span>
+      <span class="bib-entry">
+        Mercer, Kobena, and Isaac Julien. "Black Masculinity and the Politics of Race." <em>Welcome to the Jungle.</em> Ed. Kobena Mercer. Routledge, 1994.
+      </span>
+    </li>
+    <li class="bib-item">
+      <span class="bib-num">18</span>
+      <span class="bib-entry">
+        McClintock, Anne. <em>Imperial Leather.</em> Routledge, 1995.
+      </span>
+    </li>
+    <li class="bib-item">
+      <span class="bib-num">19</span>
+      <span class="bib-entry">
+        Mulvey, Laura. "Visual Pleasure and Narrative Cinema." <em>Screen</em> 16.3 (1975): 6-18.
+      </span>
+    </li>
+    <li class="bib-item">
+      <span class="bib-num">20</span>
+      <span class="bib-entry">
+        Said, Edward. <em>Orientalism.</em> Penguin, 1978.
+      </span>
+    </li>
+  </ul>
+</div>
+
+<footer>
+  <div>Black Performance Studies</div>
+  <div>The Oppositional Gaze & The Spectacle of the Other</div>
+  <div>For academic use</div>
+</footer>
+
+<script>
+  // Intro modal
+  function closeIntro() {
+    document.getElementById('intro-overlay').classList.add('hidden');
+    setTimeout(() => {
+      document.getElementById('intro-overlay').style.display = 'none';
+    }, 500);
+  }
+
+  // Intersection observer for thread nodes
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+
+  document.querySelectorAll('.thread-node').forEach((node, i) => {
+    node.style.transitionDelay = `${i * 0.1}s`;
+    observer.observe(node);
+  });
+
+  // Process notes observer
+  const processObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 120);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.process-notes li').forEach(li => {
+    processObserver.observe(li);
+  });
+
+  // Card scroll
+  let cardIndex = 0;
+  const cardWidth = 380 + 24; // card width + gap
+  const totalCards = document.querySelectorAll('.concept-card').length;
+  const visibleCards = () => Math.floor(document.querySelector('.cards-track-outer').offsetWidth / cardWidth);
+
+  function scrollCards(dir) {
+    const maxIndex = totalCards - visibleCards();
+    cardIndex = Math.max(0, Math.min(cardIndex + dir, maxIndex));
+    document.getElementById('cards-track').style.transform = `translateX(-${cardIndex * cardWidth}px)`;
+    document.getElementById('prev-btn').disabled = cardIndex === 0;
+    document.getElementById('next-btn').disabled = cardIndex >= maxIndex;
+  }
+
+  // Subtle parallax on header glyph
+  window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+    const glyph = document.querySelector('.header-glyph');
+    if (glyph) {
+      glyph.style.transform = `rotate(${scrollY * 0.05}deg) translateY(${scrollY * 0.15}px)`;
+    }
+  });
+
+  // Initialize card buttons
+  window.addEventListener('resize', () => {
+    document.getElementById('next-btn').disabled = cardIndex >= (totalCards - visibleCards());
+  });
+</script>
+
+</body>
+</html>
