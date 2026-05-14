@@ -1,4 +1,4 @@
-<!DOCTYPE html-REPLACED>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -164,13 +164,48 @@
       linear-gradient(180deg, var(--black) 0%, #0d0c0b 100%);
   }
 
-  .header-glyph {
+  .header-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(ellipse 45% 35% at 82% 22%, rgba(200, 169, 110, 0.07) 0%, transparent 60%),
+      radial-gradient(ellipse 70% 55% at 50% 110%, rgba(0, 0, 0, 0.45) 0%, transparent 45%);
+    opacity: 0.65;
+  }
+
+  .header-glyph-parallax {
     position: absolute;
     top: 12%;
     right: 8%;
     width: 340px;
     height: 340px;
-    opacity: 0.12;
+    z-index: 0;
+    pointer-events: none;
+    will-change: transform;
+  }
+
+  .header-glyph-back {
+    position: absolute;
+    inset: -14%;
+    width: 128%;
+    height: 128%;
+    opacity: 0.22;
+    filter: blur(1.4px);
+    animation: rotate 120s linear infinite reverse;
+  }
+
+  .header-glyph {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.34;
+    filter:
+      drop-shadow(0 0 18px rgba(200, 169, 110, 0.35))
+      drop-shadow(0 0 48px rgba(200, 169, 110, 0.12))
+      drop-shadow(0 0 2px rgba(240, 232, 216, 0.15));
   }
 
   .header-eyebrow {
@@ -181,14 +216,14 @@
     color: var(--amber);
     margin-bottom: 2rem;
     position: relative;
-    z-index: 1;
+    z-index: 2;
     opacity: 0;
     animation: slideUp 1s 0.3s ease forwards;
   }
 
   header h1 {
     position: relative;
-    z-index: 1;
+    z-index: 2;
     font-family: 'Cormorant Garamond', serif;
     font-weight: 300;
     font-size: clamp(2.8rem, 6vw, 5.5rem);
@@ -209,7 +244,7 @@
 
   .header-sub {
     position: relative;
-    z-index: 1;
+    z-index: 2;
     max-width: 520px;
     font-size: 1rem;
     color: var(--text-dim);
@@ -221,7 +256,7 @@
 
   .scroll-indicator {
     position: relative;
-    z-index: 1;
+    z-index: 2;
     font-family: 'Syne', sans-serif;
     font-size: 0.6rem;
     letter-spacing: 0.25em;
@@ -801,12 +836,12 @@
   }
 
   @keyframes pulse {
-    0%, 100% { opacity: 0.12; }
-    50% { opacity: 0.2; }
+    0%, 100% { opacity: 0.28; }
+    50% { opacity: 0.42; }
   }
 
   .header-glyph {
-    animation: rotate 80s linear infinite, pulse 6s ease-in-out infinite;
+    animation: rotate 80s linear infinite, pulse 7s ease-in-out infinite;
   }
 
   /* === RESPONSIVE === */
@@ -836,20 +871,24 @@
     <div class="intro-label">An Introduction</div>
     <h2>What Does It Mean to <em>Travel Through Time</em> While Black?</h2>
     <p>
-      This project sits at the intersection of two arguments. Stuart Hall tracks
-      the mechanisms that fix Black bodies inside a "racialized regime of
+      Stuart Hall tracks how Black bodies get fixed inside a "racialized regime of
       representation" across centuries. bell hooks asks what it means to look back
       at that machinery, deliberately, with what she calls the oppositional gaze.
+      Claudia Rankine, on Serena Williams, reads how excellence lives in public under
+      a microscope of manners and race. Lily Kunda follows the media storm around
+      Roc Nation and the NFL after Colin Kaepernick's kneeling made Black dissent
+      into headline spectacle.
     </p>
     <p>
       The Black spectacular as a site of shapeshifting: to be seen, refused, re-seen,
       re-refused, and then to build something else entirely from that refusal.
       Hooks traces this through cinema. Hall traces it through representation's deep
-      history. Together, they map the archive these projects inherit and the cracks
-      running through it.
+      history. Rankine and Kunda show how the same pressures travel through sports
+      pages and partnership press releases. Together they map the archive these
+      projects inherit and the cracks running through it.
     </p>
     <p>
-      Scroll through to read the red string connecting these texts, the key concepts
+      Scroll through to read the red string connecting these readings, the key concepts
       from each, and process notes for the work.
     </p>
     <button class="intro-enter-btn" onclick="closeIntro()">Enter the project</button>
@@ -859,16 +898,28 @@
 <!-- HEADER -->
 <header>
   <div class="header-bg"></div>
-  <svg class="header-glyph" viewBox="0 0 340 340" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="170" cy="170" r="140" stroke="#c8a96e" stroke-width="0.5"/>
-    <circle cx="170" cy="170" r="100" stroke="#c8a96e" stroke-width="0.5"/>
-    <circle cx="170" cy="170" r="60" stroke="#c8a96e" stroke-width="0.5"/>
-    <line x1="30" y1="170" x2="310" y2="170" stroke="#c8a96e" stroke-width="0.5"/>
-    <line x1="170" y1="30" x2="170" y2="310" stroke="#c8a96e" stroke-width="0.5"/>
-    <line x1="71" y1="71" x2="269" y2="269" stroke="#c8a96e" stroke-width="0.5"/>
-    <line x1="269" y1="71" x2="71" y2="269" stroke="#c8a96e" stroke-width="0.5"/>
-    <polygon points="170,50 200,130 290,130 220,180 248,260 170,210 92,260 120,180 50,130 140,130" stroke="#c8a96e" stroke-width="0.5" fill="none"/>
-  </svg>
+  <div class="header-glyph-parallax" aria-hidden="true">
+    <svg class="header-glyph-back" viewBox="0 0 340 340" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="170" cy="170" r="148" stroke="#a88b52" stroke-width="1.25"/>
+      <circle cx="170" cy="170" r="108" stroke="#a88b52" stroke-width="1"/>
+      <circle cx="170" cy="170" r="68" stroke="#a88b52" stroke-width="1"/>
+      <line x1="24" y1="170" x2="316" y2="170" stroke="#a88b52" stroke-width="1"/>
+      <line x1="170" y1="24" x2="170" y2="316" stroke="#a88b52" stroke-width="1"/>
+      <line x1="64" y1="64" x2="276" y2="276" stroke="#a88b52" stroke-width="1"/>
+      <line x1="276" y1="64" x2="64" y2="276" stroke="#a88b52" stroke-width="1"/>
+      <polygon points="170,50 200,130 290,130 220,180 248,260 170,210 92,260 120,180 50,130 140,130" stroke="#a88b52" stroke-width="1.1" fill="none"/>
+    </svg>
+    <svg class="header-glyph" viewBox="0 0 340 340" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="170" cy="170" r="140" stroke="#e8d4a8" stroke-width="0.75"/>
+      <circle cx="170" cy="170" r="100" stroke="#dcc698" stroke-width="0.65"/>
+      <circle cx="170" cy="170" r="60" stroke="#dcc698" stroke-width="0.65"/>
+      <line x1="30" y1="170" x2="310" y2="170" stroke="#e8d4a8" stroke-width="0.65"/>
+      <line x1="170" y1="30" x2="170" y2="310" stroke="#e8d4a8" stroke-width="0.65"/>
+      <line x1="71" y1="71" x2="269" y2="269" stroke="#dcc698" stroke-width="0.65"/>
+      <line x1="269" y1="71" x2="71" y2="269" stroke="#dcc698" stroke-width="0.65"/>
+      <polygon points="170,50 200,130 290,130 220,180 248,260 170,210 92,260 120,180 50,130 140,130" stroke="#f2e6c4" stroke-width="0.7" fill="rgba(200,169,110,0.03)"/>
+    </svg>
+  </div>
 
   <div class="header-eyebrow">Black Performance Studies</div>
   <h1>The Black Spectacular<span>Time Travel & the Oppositional Gaze</span></h1>
@@ -951,8 +1002,8 @@
           <p>
             hooks captures the subjective experience of this freezing. Black women spectators
             who went to Hollywood films encountered a cinema that had pre-decided their meaning.
-            Their response was not passive. Many cultivated an oppositional gaze: a way of looking
-            that refused the terms the film was offering.
+            Many cultivated an oppositional gaze: a way of looking that sidestepped the passive
+            role the screen offered and refused the terms the film was selling.
           </p>
           <div class="node-pull">
             "We see our history as counter-memory, using it as a way to know
@@ -975,8 +1026,8 @@
           </p>
           <p>
             This double-bind is exactly what the oppositional gaze exposes. hooks's Black female
-            spectators developed a critical distance from the screen precisely because identification
-            was not available to them on the film's own terms. Being denied entry into the apparatus
+            spectators developed a critical distance from the screen because the films rarely
+            offered identification on terms that fit their lives. Being denied entry into the apparatus
             produced an alternative vantage point, a place from which to read the image against itself.
           </p>
           <div class="node-pull">
@@ -1002,15 +1053,15 @@
           <p>
             The end of Hall's chapter examines what he calls "trans-coding": taking existing
             meanings and re-appropriating them for different ends. This is representational
-            shapeshifting. It accepts that you cannot simply step outside the regime of
-            representation, but it refuses to stay still inside it either.
+            shapeshifting. Hall stresses how hard it is to step wholly outside the regime of
+            representation; trans-coding still works with the same vocabulary, bent toward new ends,
+            bodies in motion inside the frame history built.
           </p>
           <p>
             hooks arrives at the same site through a different door. Filmmakers like Julie Dash
-            and Zeinabu Davis don't oppose the dominant cinema by simply reversing it. They shift
-            the apparatus itself: who holds the camera, what body is at the center of the frame,
-            whose gaze organizes the narrative. That is time travel in the Black spectacular sense.
-            Going back into the image-making machinery and rewiring it.
+            and Zeinabu Davis rework the apparatus itself: who holds the camera, what body sits
+            at the center of the frame, whose gaze organizes the narrative. That is time travel in
+            the Black spectacular sense, returning to the image-making machinery and rewiring it.
           </p>
           <div class="node-pull">
             "As critical spectators, black women participate in a broad range of looking
@@ -1029,7 +1080,7 @@
             What connects Hall's historical archive to hooks's cinematic present is persistence.
             Hall documents how the representational figures forged in the era of slavery, the
             Tom, the Mammy, the Buck, the tragic mulatto, passed into American cinema almost
-            intact. The genre changed. The essential grammar did not.
+            intact. The genre kept shifting while the deep grammar held.
           </p>
           <p>
             hooks saw this firsthand. The Black women spectators she interviewed were uniformly
@@ -1048,6 +1099,42 @@
         <div class="node-dot"></div>
       </div>
       <div class="node-void"></div>
+    </div>
+
+    <div class="thread-node" id="node-6">
+      <div class="node-void"></div>
+      <div class="node-connector">
+        <div class="node-dot"></div>
+      </div>
+      <div class="node-content">
+        <div class="node-number"><span>06</span></div>
+        <div class="node-title">Arena, <em>Headline, Archive</em></div>
+        <div class="node-body">
+          <p>
+            Rankine's essay on Serena Williams keeps the body center stage the way Hall does in
+            his readings of spectacle, only now the court is literal: slow-motion replays, dress-code
+            debates, breathless profiles that praise and punish in the same paragraph. Williams
+            compresses Hall's long history of visible "difference" into a single athlete's career arc.
+          </p>
+          <div class="node-pull">
+            "There is a belief among some African-Americans that to defeat racism, they have to work
+            harder, be smarter, be better."
+          </div>
+          <p>
+            Kunda's study of the Roc Nation–NFL partnership picks up the same choreography in a
+            corporate key. Press coverage framed Jay-Z as either savior or sellout while Kaepernick,
+            largely silent in the deal's aftermath, stayed lodged in the public mind as the kneeling
+            body around which the league staged its repair narrative. The question of who narrates
+            Black protest beside white institutions lands close to hooks's account of who controls
+            the look in classical Hollywood.
+          </p>
+          <div class="node-pull">
+            "Many accused the NFL of using the celebrity reputation of Roc-Nation founder, Jay-Z,
+            for cultural capital to recoup from the negative press received following the 2016 protest
+            of Colin Kaepernick."
+          </div>
+        </div>
+      </div>
     </div>
 
   </div>
@@ -1096,7 +1183,7 @@
           from soap advertisements to Olympic photographs to Hollywood.
         </p>
         <p>
-          The regime is persistent but not fixed. Its stereotypes shift in surface appearance while
+          The regime is persistent while still shifting at the joints. Its stereotypes change in surface appearance while
           maintaining their deep grammar. Race, gender, and sexuality cross each other inside it
           in ways that multiply and reinforce the marking of difference.
         </p>
@@ -1113,8 +1200,8 @@
         </p>
         <p>
           This means stereotypes are structurally binary: the same Black subject can embody both
-          the infantile and the hypersexual, the noble and the savage. The double-bind is
-          built into the form, not a failure of individual prejudice.
+          the infantile and the hypersexual, the noble and the savage.           The double-bind is
+          built into the form itself, ahead of whatever any one viewer happens to believe.
         </p>
         <div class="card-source">Hall, "The Spectacle of the Other," 1997</div>
       </div>
@@ -1193,10 +1280,45 @@
         </p>
         <p>
           This is an early version of what hooks documents in cinema: the use of Black bodies to
-          organize white fantasy, to produce white meaning, to maintain white comfort. Different
-          medium, same architecture.
+          organize white fantasy, to produce white meaning, to maintain white comfort. Hall's
+          Victorian examples arrive on the page; hooks's arrive in light, yet the architecture
+          of the look rhymes.
         </p>
-        <div class="card-source">Hall, 1997 / McClintock, 1995</div>
+        <div class="card-source">Hall, "The Spectacle of the Other," 1997</div>
+      </div>
+
+      <div class="concept-card">
+        <div class="card-tag"><div class="card-tag-dot"></div>Claudia Rankine</div>
+        <h3>Black Excellence on Display</h3>
+        <p>
+          Rankine stays close to Serena Williams at the height of her dominance: the extra work
+          of composure, the demand that triumph arrive with forgiveness ready at hand, the
+          commentary that polices a Black woman's body for "too much" joy or swagger.
+        </p>
+        <p>
+          The essay makes Hall's "incontrovertible evidence" feel almost intimate. Millions
+          of people think they already know what they are seeing when they watch her win.
+          hooks's language about cinematic gaslighting helps here, too: the crowd wants the
+          spectacle of Black excellence on its terms, on schedule, with the right facial expression.
+        </p>
+        <div class="card-source">Rankine, "The Meaning of Serena Williams," 2015</div>
+      </div>
+
+      <div class="concept-card">
+        <div class="card-tag"><div class="card-tag-dot"></div>Lily Kunda</div>
+        <h3>Celebrity, Protest, and the Broadcast Deal</h3>
+        <p>
+          Kunda reads the 2019 Roc Nation–NFL partnership as a media event where Jay-Z's
+          cultural capital met Kaepernick's kneeling in the public imagination. News cycles
+          asked, in effect, who speaks for Black dissent once institutions invite a famous face
+          inside the boardroom.
+        </p>
+        <p>
+          The argument extends hooks's and Hall's questions about who authorizes images of
+          Black life: here the arena is sports television, press releases, and Twitter threads,
+          but the choreography of looking and being looked at rhymes with the cinema Hall and hooks dissect.
+        </p>
+        <div class="card-source">Kunda, "A knee at the table," 2025</div>
       </div>
 
     </div>
@@ -1214,27 +1336,28 @@
       <ul class="process-notes" id="process-list">
         <li>
           <strong>Starting point</strong>
-          The project began with a question about time travel as a structural practice,
-          not a metaphor for nostalgia. The Black spectacular as a site where past representations
-          are not just remembered but activated, replayed, contested.
+          The project began with a question about time travel as a structural practice.
+          Nostalgia lingers nearby, yet the wager here is structural: how the Black spectacular
+          becomes a site where past representations surface, get replayed, and get fought over
+          in the present.
         </li>
         <li>
           <strong>Source selection</strong>
-          hooks and Hall were selected because they work the same terrain from opposite directions.
-          hooks is phenomenological, working from lived experience outward. Hall is structural,
-          working from systems of meaning inward. The friction between them produces the analysis.
+          hooks and Hall anchor the site because they work the same terrain from different angles.
+          hooks moves from lived experience outward; Hall maps systems of meaning inward. Rankine
+          on Williams and Kunda on the NFL partnership extend the same questions into sports media
+          where bodies, brands, and protest meet in real time.
         </li>
         <li>
           <strong>The red string</strong>
-          The organizing logic of the site came from a shared preoccupation across both texts:
-          the problem of fixing and unfixing meaning. Both are fundamentally about what it
-          takes to make meaning slide.
+          The organizing logic of the site came from a shared preoccupation across the readings:
+          the problem of fixing and unfixing meaning. Each text asks what it takes to make meaning slide.
         </li>
         <li>
           <strong>On the writing</strong>
-          The goal was to be academically grounded without treating the sources as monuments.
-          These texts are working arguments, not scripture. Engagement means pushing on them,
-          not just summarizing.
+          The goal was to stay academically grounded while treating each text as a living argument.
+          Engagement means leaning on their claims, testing them against one another, and letting
+          the contemporary readings push the archive forward.
         </li>
         <li>
           <strong>What this leaves open</strong>
@@ -1256,17 +1379,30 @@
       </div>
 
       <div style="margin-top: 1.5rem; padding: 2rem; border: 1px solid var(--border); border-radius: 4px; background: var(--deep);">
-        <div class="section-label" style="margin-bottom: 1rem;">Two Sources</div>
+        <div class="section-label" style="margin-bottom: 1rem;">Assigned PDFs (five files)</div>
+        <div style="font-size: 0.82rem; color: var(--text-dimmer); margin-bottom: 1rem; line-height: 1.55;">
+          Two editions of Hall's chapter were supplied; the bibliography lists the work once.
+        </div>
         <div style="display: grid; gap: 1rem;">
           <div style="padding: 1.2rem; background: var(--surface); border-radius: 3px;">
             <div style="font-family: 'Syne', sans-serif; font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--amber); margin-bottom: 0.4rem;">bell hooks</div>
             <div style="font-size: 0.92rem; color: var(--text); font-style: italic;">"The Oppositional Gaze"</div>
-            <div style="font-size: 0.82rem; color: var(--text-dimmer); margin-top: 0.3rem;">Black Looks, 1992</div>
+            <div style="font-size: 0.82rem; color: var(--text-dimmer); margin-top: 0.3rem;">Black Looks, 1992 (PDF)</div>
           </div>
           <div style="padding: 1.2rem; background: var(--surface); border-radius: 3px;">
             <div style="font-family: 'Syne', sans-serif; font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--amber); margin-bottom: 0.4rem;">Stuart Hall</div>
             <div style="font-size: 0.92rem; color: var(--text); font-style: italic;">"The Spectacle of the Other"</div>
-            <div style="font-size: 0.82rem; color: var(--text-dimmer); margin-top: 0.3rem;">Representation, 1997</div>
+            <div style="font-size: 0.82rem; color: var(--text-dimmer); margin-top: 0.3rem;">Representation, 1997 (2 PDFs)</div>
+          </div>
+          <div style="padding: 1.2rem; background: var(--surface); border-radius: 3px;">
+            <div style="font-family: 'Syne', sans-serif; font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--amber); margin-bottom: 0.4rem;">Claudia Rankine</div>
+            <div style="font-size: 0.92rem; color: var(--text); font-style: italic;">"The Meaning of Serena Williams"</div>
+            <div style="font-size: 0.82rem; color: var(--text-dimmer); margin-top: 0.3rem;">New York Times, 2015 (PDF)</div>
+          </div>
+          <div style="padding: 1.2rem; background: var(--surface); border-radius: 3px;">
+            <div style="font-family: 'Syne', sans-serif; font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--amber); margin-bottom: 0.4rem;">Lily Kunda</div>
+            <div style="font-size: 0.92rem; color: var(--text); font-style: italic;">"A knee at the table…"</div>
+            <div style="font-size: 0.82rem; color: var(--text-dimmer); margin-top: 0.3rem;">Communication, Culture &amp; Critique, 2025 (PDF)</div>
           </div>
         </div>
       </div>
@@ -1281,128 +1417,32 @@
   <div class="bib-header">
     <div class="section-label">Bibliography</div>
     <h2>Works Cited</h2>
-    <p>MLA format. Sources appearing in this project.</p>
+    <p>MLA format. Entries match the five PDF files supplied for this project (Hall appears twice in the folder as different scans of the same chapter, cited here once).</p>
   </div>
 
   <ul class="bib-list">
     <li class="bib-item">
       <span class="bib-num">01</span>
       <span class="bib-entry">
-        Bakhtin, Mikhail. <em>The Dialogic Imagination.</em> University of Texas Press, 1981. First published 1935.
+        Hall, Stuart. "The Spectacle of the Other." <em>Representation: Cultural Representations and Signifying Practices</em>, edited by Stuart Hall, Sage/The Open University, 1997, pp. 223-290.
       </span>
     </li>
     <li class="bib-item">
       <span class="bib-num">02</span>
       <span class="bib-entry">
-        Bhabha, Homi. "The Other Question." <em>Literature, Politics and Theory.</em> Methuen, 1986.
+        hooks, bell. "The Oppositional Gaze: Black Female Spectators." <em>Black Looks: Race and Representation</em>, South End Press, 1992, pp. 115-131.
       </span>
     </li>
     <li class="bib-item">
       <span class="bib-num">03</span>
       <span class="bib-entry">
-        Bogle, Donald. <em>Toms, Coons, Mulattoes, Mammies and Bucks: An Interpretative History of Blacks in American Films.</em> Viking Press, 1973.
+        Kunda, Lily. "A knee at the table: Jay-Z, Colin Kaepernick, and the endurance of competing strategies in Black social justice." <em>Communication, Culture &amp; Critique</em>, vol. 18, no. 1, 2025, pp. 58-66, https://doi.org/10.1093/ccc/tcae040.
       </span>
     </li>
     <li class="bib-item">
       <span class="bib-num">04</span>
       <span class="bib-entry">
-        Derrida, Jacques. <em>Positions.</em> University of Chicago Press, 1972.
-      </span>
-    </li>
-    <li class="bib-item">
-      <span class="bib-num">05</span>
-      <span class="bib-entry">
-        Diawara, Manthia. "Black British Cinema: Spectatorship and Identity Formation in Territories." <em>Black American Cinema.</em> Ed. Manthia Diawara. Routledge, 1993.
-      </span>
-    </li>
-    <li class="bib-item">
-      <span class="bib-num">06</span>
-      <span class="bib-entry">
-        Doane, Mary Ann. "Remembering Women: Psychical and Historical Construction in Film Theory." <em>Psychoanalysis and Cinema.</em> Ed. E. Ann Kaplan. Routledge, 1990.
-      </span>
-    </li>
-    <li class="bib-item">
-      <span class="bib-num">07</span>
-      <span class="bib-entry">
-        Douglas, Mary. <em>Purity and Danger.</em> Routledge and Kegan Paul, 1966.
-      </span>
-    </li>
-    <li class="bib-item">
-      <span class="bib-num">08</span>
-      <span class="bib-entry">
-        Dyer, Richard. <em>Heavenly Bodies.</em> Macmillan/BFI, 1986.
-      </span>
-    </li>
-    <li class="bib-item">
-      <span class="bib-num">09</span>
-      <span class="bib-entry">
-        Fanon, Frantz. <em>Black Skin, White Masks.</em> Pluto Press, 1986. First published 1952.
-      </span>
-    </li>
-    <li class="bib-item">
-      <span class="bib-num">10</span>
-      <span class="bib-entry">
-        Frederickson, George. <em>The Black Image in the White Mind.</em> Wesleyan University Press, 1987.
-      </span>
-    </li>
-    <li class="bib-item">
-      <span class="bib-num">11</span>
-      <span class="bib-entry">
-        Freud, Sigmund. "Fetishism." <em>On Sexualities.</em> Pelican Freud Library, vol. 7. Penguin, 1977. First published 1927.
-      </span>
-    </li>
-    <li class="bib-item">
-      <span class="bib-num">12</span>
-      <span class="bib-entry">
-        Gilman, Sander. <em>Difference and Pathology.</em> Cornell University Press, 1985.
-      </span>
-    </li>
-    <li class="bib-item">
-      <span class="bib-num">13</span>
-      <span class="bib-entry">
-        Hall, Stuart. "The Spectacle of the Other." <em>Representation: Cultural Representations and Signifying Practices.</em> Ed. Stuart Hall. Sage/The Open University, 1997, pp. 223-290.
-      </span>
-    </li>
-    <li class="bib-item">
-      <span class="bib-num">14</span>
-      <span class="bib-entry">
-        hooks, bell. "The Oppositional Gaze: Black Female Spectators." <em>Black Looks: Race and Representation.</em> South End Press, 1992, pp. 115-131.
-      </span>
-    </li>
-    <li class="bib-item">
-      <span class="bib-num">15</span>
-      <span class="bib-entry">
-        Kristeva, Julia. <em>Powers of Horror.</em> Columbia University Press, 1982.
-      </span>
-    </li>
-    <li class="bib-item">
-      <span class="bib-num">16</span>
-      <span class="bib-entry">
-        Mercer, Kobena. "Reading Racial Fetishism." <em>Welcome to the Jungle.</em> Routledge, 1994.
-      </span>
-    </li>
-    <li class="bib-item">
-      <span class="bib-num">17</span>
-      <span class="bib-entry">
-        Mercer, Kobena, and Isaac Julien. "Black Masculinity and the Politics of Race." <em>Welcome to the Jungle.</em> Ed. Kobena Mercer. Routledge, 1994.
-      </span>
-    </li>
-    <li class="bib-item">
-      <span class="bib-num">18</span>
-      <span class="bib-entry">
-        McClintock, Anne. <em>Imperial Leather.</em> Routledge, 1995.
-      </span>
-    </li>
-    <li class="bib-item">
-      <span class="bib-num">19</span>
-      <span class="bib-entry">
-        Mulvey, Laura. "Visual Pleasure and Narrative Cinema." <em>Screen</em> 16.3 (1975): 6-18.
-      </span>
-    </li>
-    <li class="bib-item">
-      <span class="bib-num">20</span>
-      <span class="bib-entry">
-        Said, Edward. <em>Orientalism.</em> Penguin, 1978.
+        Rankine, Claudia. "The Meaning of Serena Williams." <em>New York Times</em>, 25 Aug. 2015.
       </span>
     </li>
   </ul>
@@ -1410,7 +1450,7 @@
 
 <footer>
   <div>Black Performance Studies</div>
-  <div>The Oppositional Gaze & The Spectacle of the Other</div>
+  <div>Hall, hooks, Rankine, Kunda (assigned PDFs)</div>
   <div>For academic use</div>
 </footer>
 
@@ -1464,12 +1504,12 @@
     document.getElementById('next-btn').disabled = cardIndex >= maxIndex;
   }
 
-  // Subtle parallax on header glyph
+  // Subtle parallax on header glyph (wrapper only so SVG rotation animation keeps running)
   window.addEventListener('scroll', () => {
     const scrollY = window.scrollY;
-    const glyph = document.querySelector('.header-glyph');
-    if (glyph) {
-      glyph.style.transform = `rotate(${scrollY * 0.05}deg) translateY(${scrollY * 0.15}px)`;
+    const wrap = document.querySelector('.header-glyph-parallax');
+    if (wrap) {
+      wrap.style.transform = `translateY(${scrollY * 0.12}px)`;
     }
   });
 
