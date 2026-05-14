@@ -354,6 +354,70 @@
     margin: 0 4rem;
   }
 
+  /* === RED STRING SECTION (sticky intro + thread) === */
+  .red-string-wrap {
+    display: grid;
+    grid-template-columns: minmax(220px, 34%) 1fr;
+    gap: 3rem 4rem;
+    align-items: start;
+  }
+
+  .red-string-intro-col {
+    min-width: 0;
+    justify-self: end;
+  }
+
+  .red-string-intro-sticky {
+    position: sticky;
+    top: 5.25rem;
+    padding-top: 0.25rem;
+    padding-right: 1rem;
+    max-width: 420px;
+  }
+
+  .red-string-intro-sticky h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.65rem, 2.2vw, 2.4rem);
+    font-weight: 300;
+    color: var(--cream);
+    line-height: 1.12;
+    margin-bottom: 1rem;
+  }
+
+  .red-string-intro-sticky p {
+    color: var(--text-dim);
+    font-size: 1rem;
+    line-height: 1.75;
+    margin: 0;
+  }
+
+  .red-string-thread-col {
+    min-width: 0;
+  }
+
+  #red-string .red-string-intro-col > .section-label {
+    margin-bottom: 1.25rem;
+  }
+
+  .intro-byline {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: var(--text-dimmer);
+    margin-top: 1.75rem;
+    margin-bottom: 2rem;
+  }
+
+  .header-byline {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.22em;
+    color: var(--text-dimmer);
+    margin-top: 0.5rem;
+    position: relative;
+    z-index: 2;
+  }
+
   /* === RED STRING LAYOUT === */
   .thread-layout {
     display: grid;
@@ -860,6 +924,18 @@
     .concept-card { flex: 0 0 300px; }
     .cards-header { flex-direction: column; align-items: flex-start; }
     .section-rule { margin: 0 2rem; }
+    .red-string-wrap {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+    .red-string-intro-col {
+      justify-self: stretch;
+    }
+    .red-string-intro-sticky {
+      position: static;
+      max-width: none;
+      padding-right: 0;
+    }
   }
 </style>
 </head>
@@ -891,6 +967,7 @@
       Scroll through to read the red string connecting these readings, the key concepts
       from each, and process notes for the work.
     </p>
+    <p class="intro-byline">by Brendan, for Kapwa</p>
     <button class="intro-enter-btn" onclick="closeIntro()">Enter the project</button>
   </div>
 </div>
@@ -927,6 +1004,7 @@
     A study of how the spectacle of the Other has been constructed, fixed,
     and contested across history, and what it means to look back.
   </p>
+  <p class="header-byline">by Brendan, for Kapwa</p>
   <div class="scroll-indicator">
     <div class="scroll-line"></div>
     Scroll to explore
@@ -944,15 +1022,18 @@
 
 <!-- RED STRING SECTION -->
 <section id="red-string">
-  <div class="section-label">The Red String</div>
-  <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 2.4rem; font-weight: 300; color: var(--cream); line-height: 1.1; max-width: 600px; margin-bottom: 1rem;">
-    One continuous thread running through both texts
-  </h2>
-  <p style="color: var(--text-dim); font-size: 1rem; max-width: 540px; margin-bottom: 5rem; line-height: 1.7;">
-    Hall and hooks are asking the same question from opposite ends of the same rope:
-    what happens to the gaze when the gazed-upon decides to stare back?
-  </p>
-
+  <div class="red-string-wrap">
+    <div class="red-string-intro-col">
+      <div class="section-label">The Red String</div>
+      <div class="red-string-intro-sticky">
+        <h2>One continuous thread running through both texts</h2>
+        <p>
+          Hall and hooks are asking the same question from opposite ends of the same rope:
+          what happens to the gaze when the gazed-upon decides to stare back?
+        </p>
+      </div>
+    </div>
+    <div class="red-string-thread-col">
   <div class="thread-layout">
     <div class="thread-spine"></div>
 
@@ -1137,6 +1218,8 @@
       </div>
     </div>
 
+  </div>
+    </div>
   </div>
 </section>
 
@@ -1363,7 +1446,7 @@
           <strong>What this leaves open</strong>
           The connection to contemporary Black performance, to the spectacular as it operates
           now in social media and streaming, is deliberately left as the next layer. This site
-          maps the archive. The project work builds from here.
+          maps the archivebut the project work builds from here.
         </li>
       </ul>
     </div>
@@ -1379,7 +1462,7 @@
       </div>
 
       <div style="margin-top: 1.5rem; padding: 2rem; border: 1px solid var(--border); border-radius: 4px; background: var(--deep);">
-        <div class="section-label" style="margin-bottom: 1rem;">Assigned PDFs (five files)</div>
+        <div class="section-label" style="margin-bottom: 1rem;"> Sources(five files I got from Canvas)</div>
         <div style="font-size: 0.82rem; color: var(--text-dimmer); margin-bottom: 1rem; line-height: 1.55;">
           Two editions of Hall's chapter were supplied; the bibliography lists the work once.
         </div>
@@ -1417,7 +1500,7 @@
   <div class="bib-header">
     <div class="section-label">Bibliography</div>
     <h2>Works Cited</h2>
-    <p>MLA format. Entries match the five PDF files supplied for this project (Hall appears twice in the folder as different scans of the same chapter, cited here once).</p>
+    <p>Entries match the five PDF files I pulled for this  (Hall appears twice in the folder as different scans of the same chapter, cited here once).</p>
   </div>
 
   <ul class="bib-list">
@@ -1450,8 +1533,8 @@
 
 <footer>
   <div>Black Performance Studies</div>
-  <div>Hall, hooks, Rankine, Kunda (assigned PDFs)</div>
-  <div>For academic use</div>
+  <div>Spring 2026</div>
+  <div>Thank you kapwa</div>
 </footer>
 
 <script>
